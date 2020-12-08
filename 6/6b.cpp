@@ -32,6 +32,8 @@ int main()
 
     i=0;
     for(auto &s : v) {
+        const std::size_t size = std::get<1>(s).size();
+
         for(auto &c : std::get<0>(s)) {
             /* for each character */
             j=0;
@@ -39,7 +41,7 @@ int main()
                 /* for each person in the set, which did they answer? */
                 j+=ss.count(c);
             }
-            if(j==std::get<1>(s).size()) ++i;
+            i += (j==size);
         }
     }
 
