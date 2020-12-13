@@ -3,21 +3,25 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-static int heading=90; /* start by facing E */
 static int x=0;
 static int y=0;
 
+#define NORTH 0
+#define EAST 1
+#define SOUTH 2
+#define WEST 3
+
+static int heading=EAST; /* start by facing E */
 static inline void l(int deg)
 {
-    heading -= deg;
-    heading %= 360;
-    if(heading<0) heading = (360+heading);
+    static const int tr[4][4] = {{NORTH, WEST, SOUTH, EAST}, {EAST, NORTH, WEST, SOUTH}, {SOUTH, EAST, NORTH, WEST}, {WEST, SOUTH, EAST, NORTH}};
+    heading = tr[heading][deg/90];
 }
 
 static inline void r(int deg)
 {
-    heading += deg;
-    heading %= 360;
+    static const int tr[4][4] = {{NORTH, EAST, SOUTH, WEST}, {EAST, SOUTH, WEST, NORTH}, {SOUTH, WEST, NORTH, EAST}, {WEST, NORTH, EAST, SOUTH}};
+    heading = tr[heading][deg/90];
 }
 
 static inline void n(int distance)
@@ -42,7 +46,7 @@ static inline void s(int distance)
 
 static inline void f(int distance)
 {
-    static void (* const fns[359])(int) = { [0] = n, [90] = e, [180] = s, [270] = w };
+    static void (* const fns[4])(int) = { n, e, s, w };
     fns[heading](distance);
 }
 
@@ -57,7 +61,7 @@ int main()
         fns[command](val);
     }
 
-    printf("at the end, x=%d, y=%d, heading=%u\n", x, y, heading);
+    printf("at the end, x=%d, y=%d, heading=%d\n", x, y, heading);
     printf("distance is %d\n", (abs(x)+abs(y)));
     return 0;
 }
