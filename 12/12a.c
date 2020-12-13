@@ -51,7 +51,7 @@ int main()
     int val;
     char command;
 
-    static void (*const fns['Z'])(int) = { ['L'] = l, ['R'] = r, ['N'] = n, ['E'] = e, ['S'] = s, ['W'] = w, ['F'] = f};
+    static void (* const fns['Z'])(int) = { ['L'] = l, ['R'] = r, ['N'] = n, ['E'] = e, ['S'] = s, ['W'] = w, ['F'] = f};
 
     while(scanf("%c%u\n", &command, &val)==2) {
         fns[command](val);
