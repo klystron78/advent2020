@@ -45,7 +45,7 @@ namespace {
                         if((dw==w)&&(dz==z)&&(dy==y)&&(dx==x)) continue; /* don't check self */
                         auto it = space.find(std::make_tuple(dw, dz, dy, dx));
                         if(it==space.end()) continue; /* doesn't exist, so can't possibly be active */
-                        n += it->active;
+                        ++n;
                     }
 
         return n;
